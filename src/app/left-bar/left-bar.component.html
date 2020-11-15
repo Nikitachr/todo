@@ -1,0 +1,12 @@
+<div class="container flex">
+  <div class="title-container flex-centered">
+    <img src="../../assets/imgs/todo.svg" alt="todo">
+    <h1 class="title">To do</h1>
+  </div>
+  <div class="lists">
+    <app-list *ngFor="let list of lists" [list]="list"></app-list>
+    <input #form *ngIf="isAddList" (keyup.enter)="addList($event.target.value)" (focusout)="isAddList = false" type="text">
+  </div>
+  
+  <button (mousedown)="showInput()" class="add-btn button">+</button>
+</div>

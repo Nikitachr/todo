@@ -1,0 +1,30 @@
+.container{
+    height: 40px;
+    width: 100%;
+}
+input{
+    height: 18px;
+    width: 18px;
+}
+h2{
+    margin-left: 14px;
+    font-weight: 400;
+    font-size: 30px;
+    color: black;
+}
+.icon{
+    margin-left: 20px;
+    width: 20px;
+    cursor: pointer;
+    transition: all 0.1s ease-in-out;
+}
+.icon:hover{
+    transform: scale(1.1);
+}
+.icon:active{
+    transform: scale(0.9);
+}
+h2:focus[contenteditable="true"] {
+    outline: none;
+    border: none;
+}

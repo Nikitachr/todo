@@ -1,0 +1,43 @@
+.container{
+    height: 30px;
+    margin-bottom: 15px;
+    width: 100%;
+}
+.icon{
+    margin-left: 20px;
+    width: 18px;
+    cursor: pointer;
+    transition: all 0.1s ease-in-out;
+}
+.icon:hover{
+    transform: scale(1.1);
+}
+.icon:active{
+    transform: scale(0.9);
+}
+.btn{
+    cursor: pointer;
+    height: 13px;
+    width: 13px;
+    border-radius: 100%;
+    margin-left: 5px;
+    transition: all 0.1s ease-in-out;
+}
+.btn:hover{
+    transform: scale(1.1);
+}
+.btn:active{
+    transform: scale(0.9);
+}
+h2{
+    margin-left: 14px;
+    font-size: 24px;
+    font-weight: 500;
+    margin-right: 14px;
+    cursor: pointer;
+}
+span{
+    font-size: 20px;
+    font-weight: 400;
+    color: #bbbbbb;
+}

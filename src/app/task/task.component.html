@@ -1,0 +1,5 @@
+<div (mouseenter)="isHover = true" (mouseleave)="isHover = false" class="container flex-centered">
+  <input type="checkbox" [checked]="task.done" (change)="check($event.target.checked)">
+  <h2 #input contenteditable="true" (keydown.enter)="enter();" (focusout)="change($event.target.innerHTML)" class="task-title">{{task.title}}</h2>
+  <img *ngIf="isHover" class="icon" src="../../assets/imgs/delete.svg" alt="todo" (click)="deleteTask()">
+</div>

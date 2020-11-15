@@ -1,0 +1,16 @@
+<div *ngIf="selectedList != null" class="container">
+  <div class="title-container flex-centered" (mouseenter)="isHover = true" (mouseleave)="isHover = false">
+    <h1 #title contenteditable="true" class="list-title" (keydown.enter)="enter();" (focusout)="change($event.target.innerHTML)">{{selectedList.title}}</h1>
+    <img *ngIf="isHover" class="icon" src="../../assets/imgs/delete.svg" alt="delete" (click)="deleteList()">
+  </div>
+  <ul class="tasks">
+    <li *ngFor="let task of tasks" class="task">
+      <app-task [task]="task"></app-task>
+    </li>
+  </ul>
+  <input #input *ngIf="isAddTask" (keyup.enter)="addTask($event.target.value)" (focusout)="isAddTask = false" type="text">
+  <div (click)="showInput()" class="addBtn flex-centered">
+    <span>+</span>
+    <p>Add task</p>
+  </div>
+</div>

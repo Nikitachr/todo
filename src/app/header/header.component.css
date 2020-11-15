@@ -1,0 +1,13 @@
+.navbar{
+    padding: 0 50px;
+    background-color: #E74C3C;
+}
+span{
+    font-weight: normal;
+    font-size: 20px;
+    margin-right: 20px;
+    color: #fff;
+}
+.exit{
+    cursor: pointer;
+}
