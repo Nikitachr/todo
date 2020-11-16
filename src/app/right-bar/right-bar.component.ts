@@ -1,3 +1,4 @@
+import { animate, keyframes, style, transition, trigger } from '@angular/animations';
 import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
 import { Store } from '@ngrx/store';
 import { Observable } from 'rxjs';
@@ -10,11 +11,29 @@ import { AppState, selectedList, selectTasks } from '../reducers';
 @Component({
   selector: 'app-right-bar',
   templateUrl: './right-bar.component.html',
-  styleUrls: ['./right-bar.component.css']
+  styleUrls: ['./right-bar.component.css'],
+  animations: [
+    trigger(
+      'taskAnim', 
+      [
+        transition(
+          ':leave', 
+          [
+            style({ marginTop: '0px', opacity: 1 }),
+            animate('0.3s ease-in-out', keyframes([
+              style({ marginTop: '-35px', opacity: 0, offset: 0.7 }),
+              style({ marginTop: '-55px', opacity: 0, offset: 1 })
+            ]))       
+          ]
+        )
+      ]
+    )  
+  ]
 })
 export class RightBarComponent implements OnInit {
   @ViewChild('title', { static: false }) titleInput: ElementRef;
   @ViewChild('input', { static: false }) input: ElementRef;
+  isDisabled: boolean;
   isHover: boolean = false;
   selectedList$: Observable<List>;
   selectedList: List;
@@ -32,7 +51,15 @@ export class RightBarComponent implements OnInit {
     this.tasks$ = this.store.select(selectTasks);
     this.tasks$.subscribe(res => {
       if(res){
-        this.tasks = res;
+        if(this.tasks.length === res.length){
+          this.isDisabled = true;
+        } else {
+          this.isDisabled = false;
+        }
+        console.log(this.isDisabled)
+        setTimeout(()=>{
+          this.tasks = res;
+        },0);
       }
     });
   }

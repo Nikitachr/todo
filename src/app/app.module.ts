@@ -12,6 +12,7 @@ import { reducers, metaReducers } from './reducers';
 import { StoreDevtoolsModule } from '@ngrx/store-devtools';
 import { environment } from '../environments/environment';
 import { ListComponent } from './list/list.component';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { TaskComponent } from './task/task.component';
 
 @NgModule({
@@ -27,6 +28,7 @@ import { TaskComponent } from './task/task.component';
   imports: [
     BrowserModule,
     AppRoutingModule,
+    BrowserAnimationsModule,
     StoreModule.forRoot(reducers, { metaReducers }),
     !environment.production ? StoreDevtoolsModule.instrument() : []
   ],

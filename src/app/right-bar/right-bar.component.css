@@ -58,3 +58,6 @@ h1:focus[contenteditable="true"] {
     outline: none;
     border: none;
 }
+app-task{
+    display: block;
+}

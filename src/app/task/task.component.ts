@@ -1,3 +1,4 @@
+import { animate, state, style, transition, trigger } from '@angular/animations';
 import { Component, ElementRef, Input, OnInit, ViewChild } from '@angular/core';
 import { Store } from '@ngrx/store';
 import { DeleteTask, UpdateTask } from '../actions/task.actions';
@@ -7,7 +8,25 @@ import { AppState } from '../reducers';
 @Component({
   selector: 'app-task',
   templateUrl: './task.component.html',
-  styleUrls: ['./task.component.scss']
+  styleUrls: ['./task.component.scss'],
+  animations: [
+    trigger('checkuncheck', [
+      state('check', style({
+        color: '#BBBBBB',
+        textDecoration: 'line-through'
+      })),
+      state('uncheck', style({
+        color: '#000000',
+        textDecoration: 'none'
+      })),
+      transition('check => uncheck', [
+        animate('0.5s')
+      ]),
+      transition('uncheck => check', [
+        animate('0.5s')
+      ])
+    ]),
+  ]
 })
 export class TaskComponent implements OnInit {
   @ViewChild('input', { static: false }) input: ElementRef;
@@ -25,7 +44,10 @@ export class TaskComponent implements OnInit {
   
   check(check: boolean){
     let newTask: Task = {...this.task, done: check};
-    this.store.dispatch(new UpdateTask(newTask));
+    setTimeout(()=>{
+      this.store.dispatch(new UpdateTask(newTask));
+    },500);
+    
   }
   change(title: string){
     if(title.trim()){
@@ -35,7 +57,6 @@ export class TaskComponent implements OnInit {
       }
     }
     else {
-      console.log(this.input);
       this.input.nativeElement.innerText = this.task.title;
     }
   }

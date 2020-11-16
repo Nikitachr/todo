@@ -1,7 +1,8 @@
+import { animate, state, style, transition, trigger } from '@angular/animations';
 import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
 import { Store } from '@ngrx/store';
 import { Observable } from 'rxjs';
-import { AddList } from '../actions/list.actions';
+import { AddList, DeleteSelectedList } from '../actions/list.actions';
 import { List } from '../models/list.model';
 import { Task } from '../models/task.model';
 import { AppState, ListsState, selectLists } from '../reducers';
@@ -9,12 +10,57 @@ import { AppState, ListsState, selectLists } from '../reducers';
 @Component({
   selector: 'app-left-bar',
   templateUrl: './left-bar.component.html',
-  styleUrls: ['./left-bar.component.css']
+  styleUrls: ['./left-bar.component.css'],
+  animations: [
+    trigger(
+      'listAnim', 
+      [
+        transition(
+          ':leave', 
+          [
+            style({ marginTop: '0px', opacity: 1 }),
+            animate('0.2s ease-in-out', 
+                    style({ marginTop: '-45px', opacity: 0 }))
+          ], 
+        )
+      ]
+    ),
+    trigger('openClose', [
+      state('open', style({
+
+        transform: 'rotate(45deg)'
+      })),
+      state('closed', style({
+        transform: 'rotate(0)'
+      })),
+      transition('open => closed', [
+        animate('0.5s ease-in-out')
+      ]),
+      transition('closed => open', [
+        animate('0.5s ease-in-out')
+      ]),
+    ]),
+    trigger(
+      'input', 
+      [
+        transition(
+          ':enter', 
+          [
+            style({ width: '0%', opacity: 0 }),
+            animate('0.3s ease', 
+                    style({width: '100%', opacity: 1 }))
+          ], 
+        )
+        
+      ]
+    )
+  ]
 })
 export class LeftBarComponent implements OnInit {
+  
   @ViewChild('form', { static: false }) input: ElementRef;
-
-  lists: List[];
+  isDisabled: boolean;
+  lists: List[] = [];
   id: number = 0;
   isAddList: boolean = false;
   lists$: Observable<List[]>;
@@ -25,8 +71,16 @@ export class LeftBarComponent implements OnInit {
     this.lists$ = this.store.select(selectLists);
     this.lists$.subscribe(res => {
       if(res){
-        this.lists = res;
-        console.log(this.lists);
+        if(this.lists.length === res.length){
+          this.isDisabled = true;
+        } else {
+          this.isDisabled = false;
+        }
+        setTimeout(()=>{
+          this.lists = res;
+        },0);
+        
+        
       }
     })
   }

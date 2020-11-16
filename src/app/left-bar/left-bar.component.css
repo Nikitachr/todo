@@ -9,25 +9,33 @@
 h1{
     margin-left: 20px;
 }
+.btn-container{
+    align-self: center;
+    transition: all 0.1s ease-in-out;
+}
+.btn-container:hover{
+    transform: scale(1.1);
+}
+.btn-container:active{
+    transform: scale(0.9);
+}
 .add-btn{
+    cursor: pointer;
     padding: 0;
     width: 60px;
     height: 60px;
     background-color: #E74C3C;
     color: #fff;
+    border: none;
     border-radius: 50%;
     align-self: center;
     font-size: 36px;
     margin-bottom: 0;
     transition: all 0.1s ease-in-out;
 }
-.add-btn:hover{
-    transform: scale(1.1);
+.add-btn:focus{
+    outline: none;
 }
-.add-btn:active{
-    transform: scale(0.9);
-}
-
 .lists{
     justify-self: start;
     margin-bottom: auto;
@@ -41,11 +49,14 @@ input{
     border-bottom: 2px solid red;
     outline: 0;
     font-size: 24px;
-   
     background: transparent;
     transition: 0.2s ease-in-out;
 }
 input:focus{
     width: 100%;
     opacity: 1;
+}
+
+app-list{
+    display: block;
 }
