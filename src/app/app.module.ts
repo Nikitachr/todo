@@ -14,22 +14,28 @@ import { environment } from '../environments/environment';
 import { ListComponent } from './list/list.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { TaskComponent } from './task/task.component';
+import { LoginComponent } from './login/login.component';
+import { ReactiveFormsModule } from '@angular/forms';
+import { RegistrationComponent } from './registration/registration.component';
 
 @NgModule({
-  declarations: [						
+  declarations: [								
     AppComponent,
       MainPageComponent,
       HeaderComponent,
       LeftBarComponent,
       RightBarComponent,
       ListComponent,
-      TaskComponent
+      TaskComponent,
+      LoginComponent,
+      RegistrationComponent
    ],
   imports: [
     BrowserModule,
     AppRoutingModule,
     BrowserAnimationsModule,
-    StoreModule.forRoot(reducers, { metaReducers }),
+    ReactiveFormsModule,
+    StoreModule.forRoot(reducers),
     !environment.production ? StoreDevtoolsModule.instrument() : []
   ],
   providers: [],

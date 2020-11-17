@@ -1,0 +1,40 @@
+<div class="registration">
+  <div class="registration__container">
+    <div class="circle"></div>
+    <img src="../../assets/imgs/calendar-check_1.svg" alt="calendar" class="calendar">
+    <div class="registration__square">
+      <form [formGroup]="loginForm">
+        <div class="field">
+          <label class="label">Email</label>
+          <div class="control">
+            <input formControlName="email" class="input is-rounded" type="email" placeholder="Your email">
+          </div>
+          <div [@appear] *ngIf="loginForm.get('email').touched && loginForm.invalid && loginForm.get('email').errors" class="errors">
+            <p *ngIf="loginForm.get('email').errors?.required" class="help is-danger">Enter email</p>
+            <p *ngIf="loginForm.get('email').errors?.email" class="help is-danger">Enter is incorrect</p>
+          </div>
+        </div>
+        <div class="field">
+          <label class="label">Password</label>
+          <div class="control ">
+            <input formControlName="password" class="input is-rounded" type="password" placeholder="Your password">
+          </div>
+          <div *ngIf="loginForm.get('password').touched && loginForm.invalid" class="errors">
+            <p [@appear] *ngIf="loginForm.get('password').errors?.required" class="help is-danger">Enter your password</p>
+          </div>
+        </div>
+        <div class="field">
+          <label class="label">Repeat password</label>
+          <div class="control ">
+            <input formControlName="repeatPassword" class="input is-rounded" type="Password" placeholder="Repeat your password">
+          </div>
+          <div *ngIf="loginForm.get('repeatPassword').touched && loginForm.invalid" class="errors">
+            <p [@appear] *ngIf="loginForm.get('repeatPassword').errors?.required" class="help is-danger">Repeat password</p>
+          </div>
+        </div>
+        <button class="button" type="submit" [disabled]="loginForm.invalid">Log in</button>
+      </form>
+      <a [routerLink]="['/login']">Already have account?</a>
+    </div>
+  </div>
+</div>
