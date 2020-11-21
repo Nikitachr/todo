@@ -1,6 +1,5 @@
 <div class="container flex-centered" (mouseenter)="isHover = true" (mouseleave)="isHover = false">
   <div [ngStyle]="{'background-color': list.color}" (click)="changeColor()" class="btn"></div>
   <h2 (click)="selectList()" class="list-title">{{list.title}}</h2>
-  <span class="done">30%</span>
   <img *ngIf="isHover" class="icon" src="../../assets/imgs/delete.svg" alt="delete" (click)="deleteList()">
 </div>

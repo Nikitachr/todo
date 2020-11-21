@@ -12,7 +12,7 @@ export class HeaderComponent implements OnInit {
 
   ngOnInit() {
   }
-
+  Date = new Date();
   logout(){
     this.authService.logout();
   }

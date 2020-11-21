@@ -30,8 +30,12 @@ export class TaskComponent implements OnInit {
   
   check(check: boolean){
     let newTask: Task = {...this.task, done: check};
-    this.taskService.updateTask(newTask).subscribe();
-    this.store.dispatch(new UpdateTask(newTask)); 
+    this.taskService.updateTask(newTask).subscribe(res => {
+      this.store.dispatch(new UpdateTask(newTask)); 
+    }, err => {
+      this.store.dispatch(new UpdateTask(newTask));
+    });
+    
   }
   change(title: string){
     if(title.trim()){

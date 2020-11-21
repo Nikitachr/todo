@@ -14,23 +14,6 @@ import { TaskService } from '../services/task.service';
   selector: 'app-right-bar',
   templateUrl: './right-bar.component.html',
   styleUrls: ['./right-bar.component.css'],
-  animations: [
-    trigger(
-      'taskAnim', 
-      [
-        transition(
-          ':leave', 
-          [
-            style({ marginTop: '0px', opacity: 1 }),
-            animate('0.3s ease-in-out', keyframes([
-              style({ marginTop: '-35px', opacity: 0, offset: 0.7 }),
-              style({ marginTop: '-55px', opacity: 0, offset: 1 })
-            ]))       
-          ]
-        )
-      ]
-    )  
-  ]
 })
 export class RightBarComponent implements OnInit {
   @ViewChild('title', { static: false }) titleInput: ElementRef;
@@ -48,20 +31,13 @@ export class RightBarComponent implements OnInit {
   ngOnInit() {
     this.selectedList$ = this.store.select(selectedList);
     this.selectedList$.subscribe(res => {
+      
       this.selectedList = res;
     });
     this.tasks$ = this.store.select(selectTasks);
     this.tasks$.subscribe(res => {
-      console.log(res);
-      if(res){
-        if(this.tasks.length === res.length){
-          this.isDisabled = true;
-        } else {
-          this.isDisabled = false;
-        }
-        setTimeout(()=>{
-          this.tasks = res;
-        },0);
+      if(res){ 
+        this.tasks = res;
       }
     });
   }
@@ -75,7 +51,7 @@ export class RightBarComponent implements OnInit {
   }
   showInput(){
     this.isAddTask = true;
-    setTimeout(()=>{ // this will make the execution after the above boolean has changed
+    setTimeout(()=>{
       this.input.nativeElement.focus();
     },0);
   }

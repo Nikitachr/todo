@@ -9,9 +9,10 @@
           <div class="control">
             <input formControlName="email" class="input is-rounded" type="email" placeholder="Your email">
           </div>
-          <div [@appear] *ngIf="loginForm.get('email').touched && loginForm.invalid && loginForm.get('email').errors" class="errors">
+          <div [@appear] *ngIf="(loginForm.get('email').touched && loginForm.invalid && loginForm.get('email').errors) || isError" class="errors">
             <p *ngIf="loginForm.get('email').errors?.required" class="help is-danger">Enter email</p>
             <p *ngIf="loginForm.get('email').errors?.email" class="help is-danger">Email is incorrect</p>
+            <p *ngIf="isError" class="help is-danger">Email or password is invalid</p>
           </div>
         </div>
         <div class="field">

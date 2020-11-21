@@ -48,7 +48,8 @@ import { ListEffects } from './effects/list.effects';
   ],
   providers: [
     { provide: HTTP_INTERCEPTORS, useClass: WebReqInterceptorService, multi: true },
-    AuthGuard
+    AuthGuard,
+    NotAuthGuard
   ],
   bootstrap: [AppComponent]
 })

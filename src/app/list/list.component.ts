@@ -3,7 +3,8 @@ import { Store } from '@ngrx/store';
 import { Observable } from 'rxjs';
 import { DeleteList, DeleteSelectedList, SelectList, UpdateList } from '../actions/list.actions';
 import { List } from '../models/list.model';
-import { AppState, selectedList } from '../reducers';
+import { Task } from '../models/task.model';
+import { AppState, selectedList, selectTasks } from '../reducers';
 import { TaskService } from '../services/task.service';
 
 @Component({
@@ -16,6 +17,7 @@ export class ListComponent implements OnInit {
   isHover: boolean = false;
   selectedList$: Observable<List>;
   selectedList: List;
+  
   colors: string[] = ['#DC4C3F', '#FED601', '#55A630', '#00A8E8', '#F20089'];
   constructor(private store: Store<AppState>, private taskService: TaskService) { }
 

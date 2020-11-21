@@ -4,7 +4,7 @@
     <img *ngIf="isHover" class="icon" src="../../assets/imgs/delete.svg" alt="delete" (click)="deleteList()">
   </div>
   <ul class="tasks">
-    <li [@.disabled]="isDisabled" [@taskAnim] *ngFor="let task of tasks" class="task">
+    <li *ngFor="let task of tasks" class="task">
       <app-task [task]="task"></app-task>
     </li>
   </ul>
