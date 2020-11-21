@@ -3,7 +3,7 @@
     <div class="circle"></div>
     <img src="../../assets/imgs/calendar-check_1.svg" alt="calendar" class="calendar">
     <div class="registration__square">
-      <form [formGroup]="loginForm">
+      <form [formGroup]="loginForm" (ngSubmit)="submit()">
         <div class="field">
           <label class="label">Email</label>
           <div class="control">
@@ -11,7 +11,7 @@
           </div>
           <div [@appear] *ngIf="loginForm.get('email').touched && loginForm.invalid && loginForm.get('email').errors" class="errors">
             <p *ngIf="loginForm.get('email').errors?.required" class="help is-danger">Enter email</p>
-            <p *ngIf="loginForm.get('email').errors?.email" class="help is-danger">Enter is incorrect</p>
+            <p *ngIf="loginForm.get('email').errors?.email" class="help is-danger">Email is incorrect</p>
           </div>
         </div>
         <div class="field">

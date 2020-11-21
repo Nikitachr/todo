@@ -1,9 +1,11 @@
 <div class="registration">
   <div class="registration__container">
-    <div class="circle"></div>
-    <img src="../../assets/imgs/calendar-check_1.svg" alt="calendar" class="calendar">
+    <div class="circle flex-centered">
+      <img src="../../assets/imgs/calendar-check_1.svg" alt="calendar" class="calendar">
+    </div>
+    
     <div class="registration__square">
-      <form [formGroup]="loginForm">
+      <form [formGroup]="loginForm" (ngSubmit)="submit()">
         <div class="field">
           <label class="label">Email</label>
           <div class="control">
@@ -11,7 +13,7 @@
           </div>
           <div [@appear] *ngIf="loginForm.get('email').touched && loginForm.invalid && loginForm.get('email').errors" class="errors">
             <p *ngIf="loginForm.get('email').errors?.required" class="help is-danger">Enter email</p>
-            <p *ngIf="loginForm.get('email').errors?.email" class="help is-danger">Enter is incorrect</p>
+            <p *ngIf="loginForm.get('email').errors?.email" class="help is-danger">Email is incorrect</p>
           </div>
         </div>
         <div class="field">
@@ -21,6 +23,10 @@
           </div>
           <div *ngIf="loginForm.get('password').touched && loginForm.invalid" class="errors">
             <p [@appear] *ngIf="loginForm.get('password').errors?.required" class="help is-danger">Enter your password</p>
+            <p [@appear] *ngIf="loginForm.get('password').errors?.minlength" class="help is-danger">Password is too small</p>
+            <p [@appear] *ngIf="loginForm.get('password').errors?.hasNumber" class="help is-danger">Password should has at least 1 number</p>
+            <p [@appear] *ngIf="loginForm.get('password').errors?.hasCapitalCase" class="help is-danger">Password should has at least 1 capital letter</p>
+            <p [@appear] *ngIf="loginForm.get('password').errors?.hasSmallCase" class="help is-danger">Password should has at least 1 small letter</p>
           </div>
         </div>
         <div class="field">
@@ -30,6 +36,7 @@
           </div>
           <div *ngIf="loginForm.get('repeatPassword').touched && loginForm.invalid" class="errors">
             <p [@appear] *ngIf="loginForm.get('repeatPassword').errors?.required" class="help is-danger">Repeat password</p>
+            <p [@appear] class="help is-danger" *ngIf="loginForm.get('repeatPassword').errors?.mustMatch">Passwords do not match</p>
           </div>
         </div>
         <button class="button" type="submit" [disabled]="loginForm.invalid">Log in</button>

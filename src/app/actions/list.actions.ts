@@ -10,15 +10,17 @@ export enum ListActionTypes {
   SelectList = '[List] Select List',
   UpdateSelectedList = '[List] Update Selected List',
   DeleteSelectedList = '[List] Delete Selected List'
-}
+} 
 
 export class ListsAction implements Action {
   type: string;
-  payload: List;
+  payload: List | List[];
 }
 
 export class LoadLists implements Action {
   readonly type = ListActionTypes.LoadLists;
+  constructor(readonly payload: List[]) {
+  }
 }
 
 export class AddList implements Action {

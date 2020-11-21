@@ -17,6 +17,12 @@ import { TaskComponent } from './task/task.component';
 import { LoginComponent } from './login/login.component';
 import { ReactiveFormsModule } from '@angular/forms';
 import { RegistrationComponent } from './registration/registration.component';
+import { AuthGuard } from './guards/auth.guard';
+import { WebReqInterceptorService } from './services/web-req-interceptor.service';
+import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
+import { NotAuthGuard } from './guards/noAuth.guard';
+import { EffectsModule } from '@ngrx/effects';
+import { ListEffects } from './effects/list.effects';
 
 @NgModule({
   declarations: [								
@@ -33,12 +39,17 @@ import { RegistrationComponent } from './registration/registration.component';
   imports: [
     BrowserModule,
     AppRoutingModule,
+    HttpClientModule,
     BrowserAnimationsModule,
     ReactiveFormsModule,
     StoreModule.forRoot(reducers),
-    !environment.production ? StoreDevtoolsModule.instrument() : []
+    !environment.production ? StoreDevtoolsModule.instrument() : [],
+    EffectsModule.forRoot([ListEffects])
   ],
-  providers: [],
+  providers: [
+    { provide: HTTP_INTERCEPTORS, useClass: WebReqInterceptorService, multi: true },
+    AuthGuard
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

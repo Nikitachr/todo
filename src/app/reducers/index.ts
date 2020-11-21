@@ -38,42 +38,62 @@ export interface AppState {
 
 export function ListsReducer(state: ListsState = initialListsState, action: ListsAction): ListsState {
   switch (action.type) {
+    case ListActionTypes.LoadLists:
+      return {
+        ...state,
+        Lists: action.payload as List[]
+      };
     case ListActionTypes.AddList:
       return {
         ...state,
-        Lists: [...state.Lists, action.payload]
+        Lists: [...state.Lists, action.payload as List]
       };
     case ListActionTypes.UpdateList:
       return {
         ...state,
         Lists: state.Lists.map(list => {
-          if (list.id == action.payload.id){
+          let List: List = action.payload as List
+          if (list._id == List._id){
             return action.payload;
           } else {
             return list;
           }
-        })
+        }) as List[]
       }; 
       case ListActionTypes.SelectList:
         return{
           ...state,
-          selectedList: action.payload
+          selectedList: action.payload as List
         }; 
       case ListActionTypes.UpdateSelectedList:
         return {
           ...state,
-          selectedList: action.payload
+          selectedList: action.payload as List
         };
       case ListActionTypes.DeleteList:
         return {
           ...state,
-          Lists: state.Lists.filter(list => list.id !== action.payload.id)
+          Lists: state.Lists.filter(list => {
+            let List: List = action.payload as List
+            if(list._id !== List._id) {
+              return true;
+            } else {
+              return false;
+            }
+          }) as List[]
         }
-        case ListActionTypes.DeleteSelectedList:
-          return {
-            Lists: state.Lists.filter(list => list.id !== action.payload.id),
-            selectedList: null
-          }  
+      case ListActionTypes.DeleteSelectedList:
+        return {
+          Lists: state.Lists.filter(list => {
+            let List: List = action.payload as List
+            if(list._id !== List._id) {
+              return true;
+            } else {
+              return false;
+            }
+          }) as List[],
+          selectedList: null
+        }  
     default:
       return state;
   }
@@ -81,23 +101,27 @@ export function ListsReducer(state: ListsState = initialListsState, action: List
 
 export function TasksReducer(state: TasksState = initialTasksState, action: TasksAction): TasksState {
   switch (action.type) {
+    case TaskActionTypes.LoadTasks:
+      return {
+        Tasks: action.payload
+      }
     case TaskActionTypes.AddTask:
       return {
-        Tasks: [...state.Tasks, action.payload]
+        Tasks: [...state.Tasks, action.payload],
       };
      case TaskActionTypes.DeleteTask:
        return {
-         Tasks: state.Tasks.filter((task) => task.id !== action.payload.id)
+         Tasks: state.Tasks.filter((task) => task._id !== action.payload._id),
        };
       case TaskActionTypes.UpdateTask:
         return {
           Tasks: state.Tasks.map(task => {
-            if(task.id == action.payload.id){
+            if(task._id == action.payload._id){
               return action.payload;
             } else {
               return task;
             }
-          })
+          }),
         }  
     default: 
       return state;

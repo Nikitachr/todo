@@ -41,22 +41,20 @@ body{
 	height: 75px;
 	background: #FFFFFF;
 	border-radius: 100px 100px 0 0;
-
+	flex-direction: column;
 }
 
 .calendar{
 	z-index: 1;
 	position: absolute;
-	display: flex;
-	top: calc(50% - 230px);
-
+	margin-top: 30px;
 }
 p{
 	margin-bottom: 10px;
 }
 .registration__square{
 	width: 770px;
-	height: 464px;
+	height: 550px;
 	background: #FFFFFF;
 	border-radius: 26px;
 	display: flex;
@@ -91,5 +89,8 @@ form{
 a{
 	margin-top: 20px;
 	color: #DC4C3F;
+}
+.help{
+	margin-bottom: 4px;
 }
 

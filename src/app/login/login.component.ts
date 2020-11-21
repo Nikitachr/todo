@@ -1,6 +1,8 @@
 import { animate, transition, state, trigger, style } from '@angular/animations';
+import { HttpResponse } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, Validators, FormGroup, FormControl } from '@angular/forms';
+import { AuthService } from '../services/auth.service';
 
 
 @Component({
@@ -33,7 +35,9 @@ import { FormBuilder, Validators, FormGroup, FormControl } from '@angular/forms'
 })
 export class LoginComponent implements OnInit {
   loginForm: FormGroup;
-  constructor(private fb: FormBuilder) {
+  isError: boolean;
+
+  constructor(private authService: AuthService) {
     this.loginForm = new FormGroup({
       "email": new FormControl("", [
                           Validators.required, 
@@ -43,9 +47,12 @@ export class LoginComponent implements OnInit {
   });
   }
 
- 
-
   ngOnInit() {
+  }
+
+  submit(){
+    this.authService.login(this.loginForm.get('email').value, this.loginForm.get('password').value).subscribe((res: HttpResponse<any>) => {
+    }, (err: any) => {this.isError = true;});
   }
 
 }

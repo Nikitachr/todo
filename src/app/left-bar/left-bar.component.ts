@@ -2,10 +2,13 @@ import { animate, state, style, transition, trigger } from '@angular/animations'
 import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
 import { Store } from '@ngrx/store';
 import { Observable } from 'rxjs';
-import { AddList, DeleteSelectedList } from '../actions/list.actions';
+import { AddList, DeleteSelectedList, LoadLists } from '../actions/list.actions';
 import { List } from '../models/list.model';
 import { Task } from '../models/task.model';
 import { AppState, ListsState, selectLists } from '../reducers';
+import { AuthService } from '../services/auth.service';
+import { TaskService } from '../services/task.service';
+import { WebRequestService } from '../services/web-request.service';
 
 @Component({
   selector: 'app-left-bar',
@@ -64,10 +67,13 @@ export class LeftBarComponent implements OnInit {
   id: number = 0;
   isAddList: boolean = false;
   lists$: Observable<List[]>;
-  constructor(private store: Store<AppState>) { }
+  constructor(private store: Store<AppState>, private taskService: TaskService) { }
 
 
   ngOnInit() {
+    this.taskService.getLists().subscribe((res: List[]) => {
+      this.store.dispatch(new LoadLists(res));
+    })
     this.lists$ = this.store.select(selectLists);
     this.lists$.subscribe(res => {
       if(res){
@@ -79,8 +85,6 @@ export class LeftBarComponent implements OnInit {
         setTimeout(()=>{
           this.lists = res;
         },0);
-        
-        
       }
     })
   }
@@ -88,14 +92,20 @@ export class LeftBarComponent implements OnInit {
   addList(title: string){
     if(title.trim())
     {
-      let newList: List = {
-        title: title,
-        color: '#DC4C3F',
-        id: this.id
-      }
-      this.store.dispatch(new AddList(newList))
+      
+      this.taskService.createList(title).subscribe((res: List) => {
+        console.log(res);
+        let newList: List = {
+          color: '#DC4C3F',
+          _id: res._id,
+          title: title,
+          _userId: res._userId
+        }
+        this.store.dispatch(new AddList(newList))
+      })
+      
     }
-    this.id++;
+    
     this.isAddList = false;
   }
   showInput(){ 

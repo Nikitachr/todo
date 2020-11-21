@@ -1,6 +1,10 @@
 import { animate, style, transition, trigger } from '@angular/animations';
+import { HttpResponse } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
-import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
+import { AbstractControl, FormBuilder, FormControl, FormGroup, ValidationErrors, ValidatorFn, Validators } from '@angular/forms';
+import { MustMatch, patternValidator } from '../custom-validators';
+import { AuthService } from '../services/auth.service';
+
 
 @Component({
   selector: 'app-registration',
@@ -13,7 +17,7 @@ import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms'
         transition(
           ':enter', 
           [
-            style({ marginTop: '-28px', opacity: 0 }),
+            style({ marginTop: '-22px', opacity: 0 }),
             animate('0.3s ease', 
                     style({marginTop: '0', opacity: 1 }))
           ], 
@@ -23,7 +27,7 @@ import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms'
           [
             style({ marginTop: '0', opacity: 1 }),
             animate('0.3s ease', 
-                    style({marginTop: '-28px', opacity: 0 }))
+                    style({marginTop: '-22px', opacity: 0 }))
           ], 
         )
       ]
@@ -31,19 +35,34 @@ import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms'
   ]
 })
 export class RegistrationComponent implements OnInit {
+  isError: boolean = false; 
 
-  loginForm: FormGroup;
-  constructor() {
-    this.loginForm = new FormGroup({
-      "email": new FormControl("", [
-                          Validators.required, 
-                          Validators.email
-                      ]),
-      "password": new FormControl('', [Validators.required]),
-      "repeatPassword": new FormControl('', [Validators.required])
-  });
+  constructor(private fb: FormBuilder, private authService: AuthService) {
+    
   }
+
+  loginForm = this.fb.group({
+    email: ['', [Validators.required, Validators.email, Validators] ],
+    password: ['', [
+      Validators.required,
+      patternValidator(/\d/, { hasNumber: true }),
+      patternValidator(/[A-Z]/, { hasCapitalCase: true }),
+      patternValidator(/[a-z]/, { hasSmallCase: true }),
+      Validators.minLength(8)]
+    ],
+    repeatPassword: ['', Validators.required]
+  }, {
+    validator: MustMatch('password', 'repeatPassword')
+  });
+  
   ngOnInit() {
+    
+  }
+
+  submit(){
+    this.authService.signup(this.loginForm.get('email').value, this.loginForm.get('password').value).subscribe((res: HttpResponse<any>) => {
+    }, (err: any) => {this.isError = true;});
+    
   }
 
 }

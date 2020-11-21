@@ -1,7 +1,8 @@
 import {Task} from './task.model'
 
 export interface List {
-    title: string;
     color: string;
-    id: number;
+    _id: string;
+    title: string;
+    _userId: string;
 } 

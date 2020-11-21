@@ -10,12 +10,12 @@ export enum TaskActionTypes {
 
 export class TasksAction implements Action {
   type: string;
-  payload: Task;
+  payload: Task & Task[];
 }
 
 export class LoadTasks implements Action {
   readonly type = TaskActionTypes.LoadTasks;
-  constructor(readonly payload: Task) {
+  constructor(readonly payload: Task[]) {
   }
 }
 
